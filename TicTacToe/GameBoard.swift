@@ -16,6 +16,10 @@ typealias Coordinate = (x: Int, y: Int)
 
 struct GameBoard {
     
+    
+    private var squares = Array(repeating: Square.empty, count: 9)
+   
+    
     enum Mark: Equatable {
         case x
         case o
@@ -32,7 +36,8 @@ struct GameBoard {
         case filled(Mark)
         case empty
     }
-    
+    // let gameboard = Gameboard()
+    // let mark = gameboard[(x:1, y:2)]
     subscript(coordinate: Coordinate) -> Mark? {
         let square = squares[arrayIndex(for: coordinate)]
         if case let Square.filled(mark) = square {
@@ -62,5 +67,4 @@ struct GameBoard {
         return square.y * 3 + square.x
     }
     
-    private var squares = Array(repeating: Square.empty, count: 9)
 }
