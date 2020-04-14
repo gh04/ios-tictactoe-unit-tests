@@ -18,7 +18,13 @@ struct GameBoard {
     
     
     private var squares = Array(repeating: Square.empty, count: 9)
-   
+    
+//    private var squares: [Square] = {
+//        var array = Array(repeating: Square.empty, count: 9)
+//        array[4] = .filled(.x)
+//        return array
+//    }()
+//
     
     enum Mark: Equatable {
         case x
