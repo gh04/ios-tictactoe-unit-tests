@@ -8,23 +8,11 @@
 
 import Foundation
 
-enum GameBoardError: Error, Equatable {
-    case invalidSquare
-}
 
-typealias Coordinate = (x: Int, y: Int)
 
 struct GameBoard {
     
-    
-    private var squares = Array(repeating: Square.empty, count: 9)
-    
-//    private var squares: [Square] = {
-//        var array = Array(repeating: Square.empty, count: 9)
-//        array[4] = .filled(.x)
-//        return array
-//    }()
-//
+
     
     enum Mark: Equatable {
         case x
@@ -38,12 +26,25 @@ struct GameBoard {
         }
     }
     
+      private var squares = Array(repeating: Square.empty, count: 9)
+        
+    //    private var squares: [Square] = {
+    //        var array = Array(repeating: Square.empty, count: 9)
+    //        array[4] = .filled(.x)
+    //        return array
+    //    }()
+    //
+    
     private enum Square: Equatable {
         case filled(Mark)
         case empty
     }
     // let gameboard = Gameboard()
     // let mark = gameboard[(x:1, y:2)]
+    //A subscript function allows me to access objects inside the board using squared brackets.
+    //Whatever is the paramenter in this function will serve as the bracket's input.
+    //
+    //e.g board[(0,0)] -> Mark?
     subscript(coordinate: Coordinate) -> Mark? {
         let square = squares[arrayIndex(for: coordinate)]
         if case let Square.filled(mark) = square {
@@ -52,11 +53,14 @@ struct GameBoard {
             return nil
         }
     }
-    
+    //
     mutating func place(mark: Mark, on square: Coordinate) throws {
         if self[square] != nil {
             throw GameBoardError.invalidSquare
         }
+        // Find the index (0) from the given coordinate(0,0)
+        //(0,0) -> Indez
+        let indexFromCoordinate = arrayIndex(for: square)
         squares[arrayIndex(for: square)] = .filled(mark)
     }
     
@@ -73,4 +77,22 @@ struct GameBoard {
         return square.y * 3 + square.x
     }
     
+    enum Position {
+        case topLeft
+        case topCenter
+        case topRight
+        case middleLeft
+        case middleCenter
+        case middleRight
+        case bottomLeft
+        case bottomCenter
+        case bottomRight
+    }
+    
 }
+
+enum GameBoardError: Error, Equatable {
+    case invalidSquare
+}
+
+typealias Coordinate = (x: Int, y: Int)
